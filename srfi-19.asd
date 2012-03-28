@@ -11,6 +11,7 @@
                :srfi-23
                :mbe)
   :components ((:file "package")
+               (:file "util")
                (:file "srfi-19")
                (:file "test")))
 
