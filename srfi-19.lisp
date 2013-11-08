@@ -1296,6 +1296,22 @@
 
 
 (define-function (date->string date .  format-string)
+  "~~	any	read literal ~	nothing
+~a	char-alphabetic?	abbreviated weekday in locale	nothing
+~A	char-alphabetic?	full weekday in locale	nothing
+~b	char-alphabetic?	abbreviated month name in locale	nothing
+~B	char-alphabetic?	full month name in locale	nothing
+~d	char-numeric?	day of month	date-day
+~e	any	day of month, blank padded	date-day
+~h	char-alphabetic?	same as ~b	nothing
+~H	char-numeric?	hour	date-hour
+~k	any	hour, blank padded	date-hour
+~m	char-numeric?	month	date-month
+~M	char-numeric?	minute	date-minute
+~S	char-numeric?	second	date-second
+~y	any	2-digit year	date-year within 50 years
+~Y	char-numeric?	year	date-year
+~z	any	time zone	date-zone-offset"
   (let ( (str-port (open-output-string))
 	 (fmt-str (.optional format-string "~c")) )
     (tm.date-printer date 0 fmt-str (string-length fmt-str) str-port)
@@ -1569,6 +1585,47 @@
                             (tm.string->date date (+ index 2) format-string  str-len port template-string) ))))))))))
 
 (define-function (string->date input-string template-string)
+  "~~	a literal ~
+~a	locale's abbreviated weekday name (Sun...Sat)
+~A	locale's full weekday name (Sunday...Saturday)
+~b	locale's abbreviate month name (Jan...Dec)
+~B	locale's full month day (January...December)
+~c	locale's date and time (e.g., \"Fri Jul 14 20:28:42-0400 2000\")
+~d	day of month, zero padded (01...31)
+~D	date (mm/dd/yy)
+~e	day of month, blank padded ( 1...31)
+~f	seconds+fractional seconds, using locale's decimal separator (e.g. 5.2).
+~h	same as ~b
+~H	hour, zero padded, 24-hour clock (00...23)
+~I	hour, zero padded, 12-hour clock (01...12)
+~j	day of year, zero padded
+~k	hour, blank padded, 24-hour clock (00...23)
+~l	hour, blank padded, 12-hour clock (01...12)
+~m	month, zero padded (01...12)
+~M	minute, zero padded (00...59)
+~n	new line
+~N	nanosecond, zero padded
+~p	locale's AM or PM
+~r	time, 12 hour clock, same as \"~I:~M:~S ~p\"
+~s	number of full seconds since \"the epoch\" (in UTC)
+~S	second, zero padded (00...60)
+~t	horizontal tab
+~T	time, 24 hour clock, same as \"~H:~M:~S\"
+~U	week number of year with Sunday as first day of week (00...53)
+~V	week number of year with Monday as first day of week (01...52)
+~w	day of week (0...6)
+~W	week number of year with Monday as first day of week (01...52)
+~x	week number of year with Monday as first day of week (00...53)
+~X	locale's date representation, for example: \"07/31/00\"
+~y	last two digits of year (00...99)
+~Y	year
+~z	time zone in RFC-822 style
+~Z	symbol time zone (not-implemented)
+~1	ISO-8601 year-month-day format
+~2	ISO-8601 hour-minute-second-timezone format
+~3	ISO-8601 hour-minute-second format
+~4	ISO-8601 year-month-day-hour-minute-second-timezone format
+~5	ISO-8601 year-month-day-hour-minute-second format"
   (labels ((tm.date-ok? (date)
              (and (date-nanosecond date)
                   (date-second date)
