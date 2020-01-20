@@ -1,4 +1,4 @@
-(cl:in-package :srfi-19.internal)
+(cl:in-package "https://github.com/g000001/srfi-19#internals")
 
 (defconstant +eof+
   (if (boundp '+eof+)

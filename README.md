@@ -1,5 +1,6 @@
-* SRFI 19: Time Data Types and Procedures
-- Copyright (C) Neodesic Corporation (2000). All Rights Reserved.
+# SRFI 19: Time Data Types and Procedures
+
+* Copyright (C) Neodesic Corporation (2000). All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

@@ -1,4 +1,4 @@
-(cl:in-package :srfi-19.internal)
+(cl:in-package "https://github.com/g000001/srfi-19#internals")
 
 (def-suite srfi-19)
 
@@ -8,9 +8,9 @@
   (is-true
    (not (null? (list (current-time 'time-tai)
                      (current-time 'time-utc)
-		      (current-time 'time-monotonic)
-		      (current-time 'time-thread)
-		      (current-time 'time-process))))))
+		     (current-time 'time-monotonic)
+		     (current-time 'time-thread)
+		     (current-time 'time-process))))))
 
 (test |Testing time resolutions|
   (is-true
@@ -132,14 +132,14 @@
 
 (test |TAI-Date Conversions|
   (and
-     (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 29)) 0)
-	       (make-date 0 58 59 23 31 12 1998 0))
-     (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 30)) 0)
-	       (make-date 0 59 59 23 31 12 1998 0))
-     (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 31)) 0)
-	       (make-date 0 60 59 23 31 12 1998 0))
-     (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 32)) 0)
-	       (make-date 0 0 0 0 1 1 1999 0))))
+   (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 29)) 0)
+	     (make-date 0 58 59 23 31 12 1998 0))
+   (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 30)) 0)
+	     (make-date 0 59 59 23 31 12 1998 0))
+   (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 31)) 0)
+	     (make-date 0 60 59 23 31 12 1998 0))
+   (tm.date= (time-tai->date (make-time time-tai 0 (+ 915148800 32)) 0)
+	     (make-date 0 0 0 0 1 1 1999 0))))
 
 (test |Date-UTC Conversions|
   (is-true

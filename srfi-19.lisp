@@ -1,6 +1,6 @@
 ;;;; srfi-19.lisp
 
-(cl:in-package :srfi-19.internal)
+(cl:in-package "https://github.com/g000001/srfi-19#internals")
 
 ;; SRFI-19: Time Data Types and Procedures.
 ;;
@@ -265,10 +265,10 @@
 
 ;; thanks, Martin Gasbichler ...
 
-#|(define-function (copy-time time)
+(define-function (copy-time time)
   (make-time (time-type time)
 	     (time-second time)
-	     (time-nanosecond time)))|#
+	     (time-nanosecond time)))
 
 (defmethod print-object ((obj time) stream)
   (print-unreadable-object (obj stream)
@@ -288,12 +288,18 @@
 ;;    let's pretend we do, using mzscheme's current-seconds & current-milliseconds
 ;;    this is supposed to return utc.
 ;;
+(define-function (unix-gettimeofday)
+  #+sbcl (receive (\0 s ms \3 \4) (sb-unix:unix-gettimeofday)
+           (declare (ignore \0 \3 \4))
+           (values s ms))
+  #+lispworks (local-time::lispworks-gettimeofday)
+  #+:abcl (* 1000 (swank::get-real-time-in-msecs))
+  #-(:or :abcl :lispworks :sbcl) (not-implemented))
+
 
 (define-function (tm.get-time-of-day)
-  (receive (ignore sec millisec)
-           #+sbcl (sb-unix:unix-gettimeofday)
-           #-sbcl (not-implemented)
-    (declare (ignore ignore))
+  (receive (sec millisec)
+           (unix-gettimeofday)
     (values sec millisec)))
 
 (define-function (tm.current-time-utc)
@@ -598,6 +604,7 @@
 
 ;; -- date structures
 
+
 (define-record-type date
   (make-date nanosecond second minute hour day month year zone-offset)
   date?
@@ -609,7 +616,6 @@
   (month date-month set-date-month!)
   (year date-year set-date-year!)
   (zone-offset date-zone-offset set-date-zone-offset!))
-
 
 ;; #<date 2012/03/27 14:15:32.688865000 (32400)>
 
